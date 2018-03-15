@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fusedlocation.harisevak.com.fuseloc2.MainActivity"
+    android:padding="16dp"
+    android:layout_gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txtLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location "
+        android:layout_marginTop="30dp"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal"
+        />
+    <TextView
+        android:id="@+id/txtCoordinates"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginTop="30dp"
+        android:textSize="25sp"
+        android:layout_gravity="center_horizontal"
+        />
+    <Button
+        android:id="@+id/btnGetCoordinates"
+        android:text="Get Coordinates"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"/>
+
+    <Button
+        android:id="@+id/btnTrackLocation"
+        android:text="Track Location"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Colored"/>
+</LinearLayout>
