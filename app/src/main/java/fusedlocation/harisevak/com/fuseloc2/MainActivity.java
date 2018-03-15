@@ -34,6 +34,9 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
+    FirebaseDatabase database;
+    DatabaseReference myRefLat;
+    DatabaseReference myRefLong;
 
     private static final int MY_PERMISSION_REQUEST_CODE = 7171;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 7172;
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private static int FASTEST_INTERVAL = 3000; //ms
     private static int DISPLACEMENT = 2; //m
     public static int i=0;
+    public double latitude;
+    public double longitude;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -130,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
-    private void displayLocation() {
+    public void displayLocation() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 ) {
@@ -138,12 +143,21 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-            double latitude = mLastLocation.getLatitude();
-            double longitude = mLastLocation.getLongitude();
+            latitude = mLastLocation.getLatitude();
+            longitude = mLastLocation.getLongitude();
             textCoordinates.setText(latitude + " / " + longitude+ "\n" + i);
+            updateFirebase();
             i++;
         } else
             textCoordinates.setText("Couldn't get Location. Enable location on device");
+    }
+
+    public void updateFirebase(){
+        database= FirebaseDatabase.getInstance();
+        myRefLat= database.getReference("GPS/location"+i+"/latitude");
+        myRefLat.setValue(latitude);
+        myRefLong= database.getReference("GPS/location"+i+"/longitude");
+        myRefLong.setValue(longitude);
     }
 
     private void CreateLocationRequet() {
@@ -217,4 +231,5 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mLastLocation= location;
         displayLocation();
     }
+
 }
