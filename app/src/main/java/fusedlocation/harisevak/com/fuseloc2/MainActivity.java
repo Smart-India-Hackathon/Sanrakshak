@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -39,7 +40,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     DatabaseReference myRefLat;
     DatabaseReference myRefLong;
 
-    RelativeLayout pingBtnLayout, pingInterfaceLayout;
+    RelativeLayout pingBtnLayout;
+    LinearLayout pingInterfaceLayout;
 
     private static final int MY_PERMISSION_REQUEST_CODE = 7171;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 7172;
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private LocationRequest mLocationRequest;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
+    private Button btnGoBackPing;
 
     private static int UPDATE_INTERVAL = 5000; //ms
     private static int FASTEST_INTERVAL = 3000; //ms
@@ -76,9 +79,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
         btnGetCoordinates = (Button) findViewById(R.id.btnGetCoordinates);
         btnLocation = (Button) findViewById(R.id.btnTrackLocation);
-
+        btnGoBackPing= findViewById(R.id.btnGoBackPing);
         pingBtnLayout= (RelativeLayout) findViewById(R.id.pingBtnLayout);
-        pingInterfaceLayout= (RelativeLayout) findViewById(R.id.pingInterfaceLayout);
+        pingInterfaceLayout= (LinearLayout) findViewById(R.id.pingInterfaceLayout);
 
         pingInterfaceLayout.setVisibility(View.GONE);
 
@@ -103,6 +106,14 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 pingInterfaceLayout.setVisibility(View.VISIBLE);
                 pingBtnLayout.setVisibility(View.GONE);
                 displayLocation();
+            }
+        });
+
+        btnGoBackPing.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pingBtnLayout.setVisibility((View.VISIBLE));
+                pingInterfaceLayout.setVisibility(View.GONE);
             }
         });
 
@@ -161,9 +172,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     public void updateFirebase(){
         database= FirebaseDatabase.getInstance();
-        myRefLat= database.getReference("GPS/location"+i+"/latitude");
+        myRefLat= database.getReference("GPS/location"+i+"/lat");
         myRefLat.setValue(latitude);
-        myRefLong= database.getReference("GPS/location"+i+"/longitude");
+        myRefLong= database.getReference("GPS/location"+i+"/lng");
         myRefLong.setValue(longitude);
     }
 
