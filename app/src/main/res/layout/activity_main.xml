@@ -5,41 +5,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="fusedlocation.harisevak.com.fuseloc2.MainActivity"
-    android:padding="16dp"
+    android:padding="5dp"
     android:layout_gravity="center_horizontal"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/txtLabel"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Location "
-        android:layout_marginTop="30dp"
-        android:textSize="25sp"
-        android:layout_gravity="center_horizontal"
-        />
-    <TextView
-        android:id="@+id/txtCoordinates"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_marginTop="30dp"
-        android:textSize="25sp"
-        android:layout_gravity="center_horizontal"
-        />
-    <Button
-        android:id="@+id/btnGetCoordinates"
-        android:text="Get Coordinates"
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.Button.Colored"/>
+        android:background="#f4d57f"
+        android:padding="10dp"
+        android:paddingBottom="25dp">
 
-    <Button
-        android:id="@+id/btnTrackLocation"
-        android:text="Track Location"
-        android:layout_marginTop="20dp"
+        <Button
+            android:id="@+id/btnTrackLocation"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Start Patrolling"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pingInterfaceLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/Widget.AppCompat.Button.Colored"/>
+        android:layout_height="match_parent"
+        android:background="#696562"
+        >
+
+        <TextView
+            android:id="@+id/jaiho"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jai Shree Ram"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pingBtnLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#696562"
+        >
+
+        <Button
+            android:id="@+id/btnGetCoordinates"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Ping"
+            android:textSize="30sp"/>
+
+    </RelativeLayout>
+
 </LinearLayout>

@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,9 +39,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     DatabaseReference myRefLat;
     DatabaseReference myRefLong;
 
+    RelativeLayout pingBtnLayout, pingInterfaceLayout;
+
     private static final int MY_PERMISSION_REQUEST_CODE = 7171;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 7172;
-    private TextView textCoordinates;
     private Button btnGetCoordinates, btnLocation;
     private boolean mRequestingLocationUpdates = false;
     private LocationRequest mLocationRequest;
@@ -72,9 +74,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textCoordinates = (TextView) findViewById(R.id.txtCoordinates);
         btnGetCoordinates = (Button) findViewById(R.id.btnGetCoordinates);
         btnLocation = (Button) findViewById(R.id.btnTrackLocation);
+
+        pingBtnLayout= (RelativeLayout) findViewById(R.id.pingBtnLayout);
+        pingInterfaceLayout= (RelativeLayout) findViewById(R.id.pingInterfaceLayout);
+
+        pingInterfaceLayout.setVisibility(View.GONE);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -93,6 +99,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         btnGetCoordinates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                pingInterfaceLayout.setVisibility(View.VISIBLE);
+                pingBtnLayout.setVisibility(View.GONE);
                 displayLocation();
             }
         });
@@ -145,11 +154,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if (mLastLocation != null) {
             latitude = mLastLocation.getLatitude();
             longitude = mLastLocation.getLongitude();
-            textCoordinates.setText(latitude + " / " + longitude+ "\n" + i);
             updateFirebase();
             i++;
-        } else
-            textCoordinates.setText("Couldn't get Location. Enable location on device");
+        }
     }
 
     public void updateFirebase(){
