@@ -1,5 +1,5 @@
 package fusedlocation.harisevak.com.fuseloc2;
-
+//Jai Shree Ram.
 import android.*;
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -144,12 +144,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     private void togglePerioicUpdates() {
         if(!mRequestingLocationUpdates){
-            btnLocation.setText("Stop Location update");
+            btnLocation.setText("End Patrolling");
             mRequestingLocationUpdates= true;
             startLocationUpdates();
         }
         else{
-            btnLocation.setText(("Start Location update"));
+            btnLocation.setText(("Resume Patrolling"));
             mRequestingLocationUpdates= false;
             stopLocationUpdates();
         }
