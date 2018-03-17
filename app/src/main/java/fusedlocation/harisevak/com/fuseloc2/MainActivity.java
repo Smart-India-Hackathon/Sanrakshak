@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     FirebaseDatabase database;
     DatabaseReference myRefLat;
     DatabaseReference myRefLong;
+    DatabaseReference myLocId;
 
     RelativeLayout pingBtnLayout;
     LinearLayout pingInterfaceLayout;
@@ -176,6 +177,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         myRefLat.setValue(latitude);
         myRefLong= database.getReference("GPS/location"+i+"/lng");
         myRefLong.setValue(longitude);
+        myLocId= database.getReference("GPS/location"+i+"/id");
+        myLocId.setValue(i);
     }
 
     private void CreateLocationRequet() {
