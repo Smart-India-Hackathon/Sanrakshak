@@ -12,10 +12,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.Activity;
+import android.content.Intent;
+import android.view.KeyEvent;
+
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
@@ -53,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
     private Button btnGoBackPing;
+    private ImageButton emergencyBtn;
 
     private static int UPDATE_INTERVAL = 5000; //ms
     private static int FASTEST_INTERVAL = 3000; //ms
@@ -60,6 +66,27 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public static int i=0;
     public double latitude;
     public double longitude;
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        int action = event.getAction();
+        int keyCode = event.getKeyCode();
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_VOLUME_DOWN:
+
+                if(event.isLongPress()==true) {  //start new activity B
+                    Toast.makeText(getApplicationContext(),"SOS Signal Sent",Toast.LENGTH_LONG).show();
+                    Intent myIntent = new Intent(MainActivity.this, EmergencyActivity.class);
+                    MainActivity.this.startActivity(myIntent);
+                    return true;
+                }
+
+            default:
+                return super.dispatchKeyEvent(event);
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -84,8 +111,20 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         btnGoBackPing= findViewById(R.id.btnGoBackPing);
         pingBtnLayout= (RelativeLayout) findViewById(R.id.pingBtnLayout);
         pingInterfaceLayout= (LinearLayout) findViewById(R.id.pingInterfaceLayout);
+        emergencyBtn= findViewById(R.id.emergencyBtn);
 
         pingInterfaceLayout.setVisibility(View.GONE);
+
+
+        emergencyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(),"SOS Signal Sent",Toast.LENGTH_LONG).show();
+                Intent myIntent = new Intent(MainActivity.this, EmergencyActivity.class);
+                MainActivity.this.startActivity(myIntent);
+            }
+        });
+
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED

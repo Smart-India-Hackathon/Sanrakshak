@@ -29,6 +29,39 @@
 
     </RelativeLayout>
 
+
+    <!-- PING BUTTON LAYOUT Jai HO-->
+    <RelativeLayout
+        android:id="@+id/pingBtnLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffa424"
+        >
+
+        <Button
+            android:id="@+id/btnGetCoordinates"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="Ping"
+            android:textSize="30sp"/>
+
+        <ImageButton
+            android:id="@+id/emergencyBtn"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/oval"
+            android:baselineAlignBottom="true"
+            android:src="@drawable/sos" />
+    </RelativeLayout>
+
+
     <LinearLayout
         android:id="@+id/pingInterfaceLayout"
         android:layout_width="match_parent"
@@ -308,25 +341,5 @@
             android:layout_centerHorizontal="true"
             android:text="No Ping! Go Back."/>
     </LinearLayout>
-
-    <!-- PING BUTTON LAYOUT Jai HO-->
-    <RelativeLayout
-        android:id="@+id/pingBtnLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#ffa424"
-        >
-
-        <Button
-            android:id="@+id/btnGetCoordinates"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
-            android:text="Ping"
-            android:textSize="30sp"/>
-
-    </RelativeLayout>
 
 </LinearLayout>
