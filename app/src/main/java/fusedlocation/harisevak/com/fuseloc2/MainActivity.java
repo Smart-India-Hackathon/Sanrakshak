@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     DatabaseReference myRefLat;
     DatabaseReference myRefLong;
     DatabaseReference myLocId;
+    DatabaseReference guardDetails;
 
     RelativeLayout pingBtnLayout;
     LinearLayout pingInterfaceLayout;
@@ -173,11 +174,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     public void updateFirebase(){
         database= FirebaseDatabase.getInstance();
-        myRefLat= database.getReference("GPS/location"+i+"/lat");
+        guardDetails= database.getReference("Guard1/guardDetails/g_id");
+        guardDetails.setValue("1");
+        myRefLat= database.getReference("Guard1/locations/"+i+"/lat");
         myRefLat.setValue(latitude);
-        myRefLong= database.getReference("GPS/location"+i+"/lng");
+        myRefLong= database.getReference("Guard1/locations/"+i+"/lng");
         myRefLong.setValue(longitude);
-        myLocId= database.getReference("GPS/location"+i+"/id");
+        myLocId= database.getReference("Guard1/locations/"+i+"/id");
         myLocId.setValue(i);
     }
 
