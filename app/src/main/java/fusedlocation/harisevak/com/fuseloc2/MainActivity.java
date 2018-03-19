@@ -46,6 +46,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     DatabaseReference myRefLong;
     DatabaseReference myLocId;
     DatabaseReference guardDetails;
+    DatabaseReference eRefLat;
+    DatabaseReference eRefLng;
 
     RelativeLayout pingBtnLayout;
     LinearLayout pingInterfaceLayout;
@@ -66,6 +68,8 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public static int i=0;
     public double latitude;
     public double longitude;
+    public double latE;
+    public double lngE;
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
                 if(event.isLongPress()==true) {  //start new activity B
                     Toast.makeText(getApplicationContext(),"SOS Signal Sent",Toast.LENGTH_LONG).show();
+                    uploadEmergency();
                     Intent myIntent = new Intent(MainActivity.this, EmergencyActivity.class);
                     MainActivity.this.startActivity(myIntent);
                     return true;
@@ -86,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                 return super.dispatchKeyEvent(event);
         }
     }
-
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -120,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"SOS Signal Sent",Toast.LENGTH_LONG).show();
+                uploadEmergency();
                 Intent myIntent = new Intent(MainActivity.this, EmergencyActivity.class);
                 MainActivity.this.startActivity(myIntent);
             }
@@ -196,6 +201,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
+    public void uploadEmergency(){
+        shootEmergency();
+    }
+
     public void displayLocation() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
@@ -211,15 +220,32 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         }
     }
 
+    public void shootEmergency() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                ) {
+            return;
+        }
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        if (mLastLocation != null) {
+            latE = mLastLocation.getLatitude();
+            lngE = mLastLocation.getLongitude();
+            database= FirebaseDatabase.getInstance();
+            eRefLat= database.getReference("Emergency/+"+2+"/lat");
+            eRefLat.setValue(latE);
+            eRefLng= database.getReference("Emergency/+"+2+"/lng");
+            eRefLng.setValue(lngE);
+        }
+    }
     public void updateFirebase(){
         database= FirebaseDatabase.getInstance();
-        guardDetails= database.getReference("Guard1/guardDetails/g_id");
-        guardDetails.setValue("1");
-        myRefLat= database.getReference("Guard1/locations/"+i+"/lat");
+        guardDetails= database.getReference("Guard2guardDetails/g_id");
+        guardDetails.setValue("2");
+        myRefLat= database.getReference("Guard2locations/"+i+"/lat");
         myRefLat.setValue(latitude);
-        myRefLong= database.getReference("Guard1/locations/"+i+"/lng");
+        myRefLong= database.getReference("Guard2locations/"+i+"/lng");
         myRefLong.setValue(longitude);
-        myLocId= database.getReference("Guard1/locations/"+i+"/id");
+        myLocId= database.getReference("Guard2locations/"+i+"/id");
         myLocId.setValue(i);
     }
 
